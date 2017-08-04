@@ -31,6 +31,11 @@ jQuery(function ($) {
     }
     extendDOM_removeGlobalCurrentMaintenance();
 
+    function extendDOM_removeGlobalReduceMaintenance() {
+        $("#maintReduce").remove();
+    }
+    extendDOM_removeGlobalReduceMaintenance();
+
     //   development notes at the bottom of the page
 
 
@@ -1301,7 +1306,7 @@ jQuery(function ($) {
         }
         else{
             maintCurrentSelect= 'Do Not Do'; // $('#maintCurrentSelect').val();
-            var reduceSelect= $('#maintReduceSelect').val();
+            var reduceSelect= 'Will Not Do'; // $('#maintReduceSelect').val();
             
             if (maintCurrentSelect != "") {                                                //  Must select Current Maintenance first
                 $("#maintReduce").removeClass("displayNone");                              //  Show bottom half
