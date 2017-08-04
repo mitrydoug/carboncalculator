@@ -33,6 +33,7 @@ jQuery(function ($) {
 
     function extendDOM_removeGlobalReduceMaintenance() {
         $("#maintReduce").remove();
+        $("#revVehicle1 > tbody > tr:first").remove();
     }
     extendDOM_removeGlobalReduceMaintenance();
 
