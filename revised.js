@@ -2,7 +2,29 @@ jQuery(function ($) {
     // set min value of 0 for all numeric inputs
     $("input[type='number']").attr('min',0);
     
-    
+    function extendDOM_addElectricVehiclePrompt() {
+
+        /* Add a new table row for asking whether each vehicle is electric or
+           not. This will be the first prompt for each vehicle. */
+        for (var vehicleNum = 1; vehicleNum <= 5; vehicleNum++) {
+            elecQuestion = $(
+                '<tr>\
+                   <td></td>\
+                   <td><label> Is this an electric vehicle? </label></td>\
+                   <td>\
+                       <select id="vehicle1ElecSelect">\
+                            <option>No</option>\
+                            <option>Yes</option>\
+                       </select>\
+                       <span class="info-iselectric info-asset"></span>\
+                    </td>\
+                    <td></td><td></td>\
+                 </tr>'
+            );
+            $('#vehicle' + vehicleNum + ' > tbody > tr').eq(1).after(elecQuestion);
+        }
+    }
+    extendDOM_addElectricVehiclePrompt();
     
     //   development notes at the bottom of the page
 
