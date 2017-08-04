@@ -23,6 +23,13 @@ jQuery(function ($) {
             );
             $('#vehicle' + vehicleNum + ' > tbody > tr').eq(1).after(elecQuestion);
         }
+
+        /* Add dialogue for what it means to be an electric vehicle */
+        $("#dialog-miles").after(
+            "<div id='dialog-iselectric' class='dialog'>\
+               <p>Select \"Yes\" if your vehicle is classified as a Battery Electric Vehicle (BEV). <a href='https://en.wikipedia.org/wiki/Battery_electric_vehicle'>More info</a></p>\
+             </div>"
+        );
     }
     extendDOM_addElectricVehiclePrompt();
     
@@ -2491,6 +2498,10 @@ jQuery(function ($) {
 		openDialog_for("#dialog-miles",$(this));
 		return false;
 	});
+    $('.info-iselectric').click(function () {
+		openDialog_for("#dialog-iselectric",$(this));
+		return false;
+	});
 	$('.info-mileage').click(function () {
 		openDialog_for("#dialog-mileage",$(this));
 		return false;
@@ -2633,6 +2644,14 @@ jQuery(function ($) {
 		minHeight: 300
 	});
 	$('#dialog-miles').dialog({
+		autoOpen: false,
+		draggable: true,
+		title: null,
+		modal: false,
+		minWidth: 400,
+		minHeight: 300
+	});
+    $('#dialog-iselectric').dialog({
 		autoOpen: false,
 		draggable: true,
 		title: null,
