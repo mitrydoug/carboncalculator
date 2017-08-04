@@ -26,6 +26,11 @@ jQuery(function ($) {
     }
     extendDOM_addElectricVehiclePrompt();
     
+    function extendDOM_removeGlobalCurrentMaintenance() {
+        $("#maintCurrent").remove();
+    }
+    extendDOM_removeGlobalCurrentMaintenance();
+
     //   development notes at the bottom of the page
 
 
@@ -1295,11 +1300,11 @@ jQuery(function ($) {
             $("#maintCurrent").removeClass("displayNone");
         }
         else{
-            maintCurrentSelect= $('#maintCurrentSelect').val();
+            maintCurrentSelect= 'Do Not Do'; // $('#maintCurrentSelect').val();
             var reduceSelect= $('#maintReduceSelect').val();
             
             if (maintCurrentSelect != "") {                                                //  Must select Current Maintenance first
-				$("#maintReduce").removeClass("displayNone");                              //  Show bottom half
+                $("#maintReduce").removeClass("displayNone");                              //  Show bottom half
 				
                 if (maintCurrentSelect == 'Already Done') {
                     $("#maintReduce").addClass("displayNone");                              //  Hide bottom half
