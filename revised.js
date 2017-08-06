@@ -2,6 +2,17 @@ jQuery(function ($) {
     // set min value of 0 for all numeric inputs
     $("input[type='number']").attr('min',0);
     
+    function extendDOM_removeGlobalCurrentMaintenance() {
+        $("#maintCurrent").remove();
+    }
+    extendDOM_removeGlobalCurrentMaintenance();
+
+    function extendDOM_removeGlobalReduceMaintenance() {
+        $("#maintReduce").remove();
+        $("#revVehicle1 > tbody > tr:first").remove();
+    }
+    extendDOM_removeGlobalReduceMaintenance();
+
     function extendDOM_addElectricVehiclePrompt() {
 
         /* Add a new table row for asking whether each vehicle is electric or
@@ -33,16 +44,6 @@ jQuery(function ($) {
     }
     extendDOM_addElectricVehiclePrompt();
     
-    function extendDOM_removeGlobalCurrentMaintenance() {
-        $("#maintCurrent").remove();
-    }
-    extendDOM_removeGlobalCurrentMaintenance();
-
-    function extendDOM_removeGlobalReduceMaintenance() {
-        $("#maintReduce").remove();
-        $("#revVehicle1 > tbody > tr:first").remove();
-    }
-    extendDOM_removeGlobalReduceMaintenance();
 
     //   development notes at the bottom of the page
 
