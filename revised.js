@@ -43,7 +43,30 @@ jQuery(function ($) {
         );
     }
     extendDOM_addElectricVehiclePrompt();
-    
+
+    function extendDOM_addCurrentMaintenancePerVehicle() {
+         /* Add a new table row for asking whether each vehicle is electric or
+           not. This will be the first prompt for each vehicle. */
+        for (var vehicleNum = 1; vehicleNum <= 5; vehicleNum++) {
+            elecQuestion = $(
+                '<tr>\
+                   <td></td>\
+                   <td><label> Perform regular maintenance? </label></td>\
+                   <td>\
+                       <select id="vehicle' + vehicleNum + 'CurrMaintSelect">\
+                            <option>No</option>\
+                            <option>Yes</option>\
+                       </select>\
+                       <span class="info-asset info-maintenance"></span>\
+                    </td>\
+                    <td></td><td></td>\
+                 </tr>'
+            );
+            $('#vehicle' + vehicleNum).append(elecQuestion);
+        }
+    }
+    extendDOM_addCurrentMaintenancePerVehicle();
+
 
     //   development notes at the bottom of the page
 
