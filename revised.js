@@ -45,10 +45,10 @@ jQuery(function ($) {
     extendDOM_addElectricVehiclePrompt();
 
     function extendDOM_addCurrentMaintenancePerVehicle() {
-         /* Add a new table row for asking whether each vehicle is electric or
-           not. This will be the first prompt for each vehicle. */
+         /* Add a new table row for asking whether the vehicle is
+            currently maintained regularly. */
         for (var vehicleNum = 1; vehicleNum <= 5; vehicleNum++) {
-            elecQuestion = $(
+            currMaintQuestion = $(
                 '<tr>\
                    <td></td>\
                    <td><label> Perform regular maintenance? </label></td>\
@@ -62,7 +62,7 @@ jQuery(function ($) {
                     <td></td><td></td>\
                  </tr>'
             );
-            $('#vehicle' + vehicleNum).append(elecQuestion);
+            $('#vehicle' + vehicleNum).append(currMaintQuestion);
         }
     }
     extendDOM_addCurrentMaintenancePerVehicle();
