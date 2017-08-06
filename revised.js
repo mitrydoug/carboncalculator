@@ -23,7 +23,7 @@ jQuery(function ($) {
                    <td></td>\
                    <td><label> Is this an electric vehicle? </label></td>\
                    <td>\
-                       <select id="vehicle1ElecSelect">\
+                       <select id="vehicle' + vehicleNum + 'ElecSelect">\
                             <option>No</option>\
                             <option>Yes</option>\
                        </select>\
