@@ -73,7 +73,7 @@ jQuery(function ($) {
             emissions. */
         for (var vehicleNum = 1; vehicleNum <= 5; vehicleNum++) {
             redMaintQuestion = $(
-                '<tr>\
+                '<tr id="vehicle' + vehicleNum + 'RedMaintRow">\
                    <td></td>\
                    <td><label> Perform regular maintenance? </label></td>\
                    <td>\
@@ -1403,7 +1403,22 @@ jQuery(function ($) {
 		displayErrorMessages();
 		displayVehicleProgressBar();
 	}
-	
+
+    function setterVehicleMaintenance(id) {
+        console.log(id);
+        vehicleNum = parseInt(id);
+        currMaint = $('#vehicle' + vehicleNum + 'CurrMaintSelect').val();
+        redMaint = $('#vehicle' + vehicleNum + 'RedMaintSelect').val();
+        console.log('Vehicle ' + vehicleNum + ' has ' + currMaint + ' and ' + redMaint);
+        if (currMaint === 'Yes') {
+            $('#vehicle' + vehicleNum + 'RedMaintRow').addClass('displayNone');
+        } else if (currMaint === 'No') {
+            $('#vehicle' + vehicleNum + 'RedMaintRow').removeClass('displayNone');
+        } else {
+            alert('currMaint is neither "Yes" nor "No"');
+        }
+    }
+
 	function calcVehicleCost(miles,mpg){
 		var cost=0;
 		// convert miles per week to miles per year first
@@ -2323,8 +2338,12 @@ jQuery(function ($) {
 	$('#percentageAirDrySelect').change(calcDryer);
 
 	$('#numVehiclesInput').change(setterVehicleNum);
-	
-	$('#maintCurrentSelect').change(function() {setterMaintenance();});
+
+    $('#vehicle1CurrMaintSelect').change(function() {setterVehicleMaintenance(1);});
+    $('#vehicle2CurrMaintSelect').change(function() {setterVehicleMaintenance(2);});
+    $('#vehicle3CurrMaintSelect').change(function() {setterVehicleMaintenance(3);});
+    $('#vehicle4CurrMaintSelect').change(function() {setterVehicleMaintenance(4);});
+    $('#vehicle5CurrMaintSelect').change(function() {setterVehicleMaintenance(5);});
 	
 	$('#vehicle1').delegate('#vehicle1Miles','input propertychange', function() {calcVehicleEmissions('1');});
 	$('#vehicle1').delegate('#vehicle1GasMileage','input propertychange', function() {calcVehicleEmissions('1');});
@@ -2346,7 +2365,11 @@ jQuery(function ($) {
 	$('#vehicle5').delegate('#vehicle5GasMileage','input propertychange', function() {calcVehicleEmissions('5');});
 	$('#vehicle5Select').change(function() {calcVehicleEmissions('5');});
 
-	$('#maintReduceSelect').change(function() {setterMaintenance();});
+    $('#vehicle1RedMaintSelect').change(function() {setterVehicleMaintenance(1);});
+    $('#vehicle2RedMaintSelect').change(function() {setterVehicleMaintenance(2);});
+    $('#vehicle3RedMaintSelect').change(function() {setterVehicleMaintenance(3);});
+    $('#vehicle4RedMaintSelect').change(function() {setterVehicleMaintenance(4);});
+    $('#vehicle5RedMaintSelect').change(function() {setterVehicleMaintenance(5);});
 	
 	$('#revVehicle1').delegate('#reduceMilesInput1','input propertychange', function() {calcMilesSavings('1');});
 	$('#revVehicle1').delegate('#replaceVehicleInput1','input propertychange', function() {calcMpgSavings('1');});
