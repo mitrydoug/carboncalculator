@@ -139,7 +139,7 @@ jQuery(function ($) {
 
         /* Add a new table row for asking whether each vehicle is electric or
            not. This will be the first prompt for each vehicle. */
-        for (var vehicleNum = 1; vehicleNum <= 5; vehicleNum++) {
+        for (var vehicleNum = 1; vehicleNum <= UI_MAX_VEHICLES; vehicleNum++) {
             elecQuestion = $(
                 '<tr>\
                    <td></td>\
@@ -169,7 +169,7 @@ jQuery(function ($) {
     function extendDOM_addCurrentMaintenancePerVehicle() {
          /* Add a new table row for asking whether the vehicle is
             currently maintained regularly. */
-        for (var vehicleNum = 1; vehicleNum <= 5; vehicleNum++) {
+        for (var vehicleNum = 1; vehicleNum <= UI_MAX_VEHICLES; vehicleNum++) {
             currMaintQuestion = $(
                 '<tr>\
                    <td></td>\
@@ -193,7 +193,7 @@ jQuery(function ($) {
          /* Add a new table row for asking whether the user is willing
             to begin maintaining this vehicle in order to reduce carbon
             emissions. */
-        for (var vehicleNum = 1; vehicleNum <= 5; vehicleNum++) {
+        for (var vehicleNum = 1; vehicleNum <= UI_MAX_VEHICLES; vehicleNum++) {
             redMaintQuestion = $(
                 '<tr id="vehicle' + vehicleNum + 'RedMaintRow">\
                    <td></td>\
@@ -2346,6 +2346,11 @@ jQuery(function ($) {
     $('#vehicle3CurrMaintSelect').change(function() {setterVehicleMaintenance(3);});
     $('#vehicle4CurrMaintSelect').change(function() {setterVehicleMaintenance(4);});
     $('#vehicle5CurrMaintSelect').change(function() {setterVehicleMaintenance(5);});
+    $('#vehicle6CurrMaintSelect').change(function() {setterVehicleMaintenance(1);});
+    $('#vehicle7CurrMaintSelect').change(function() {setterVehicleMaintenance(2);});
+    $('#vehicle8CurrMaintSelect').change(function() {setterVehicleMaintenance(3);});
+    $('#vehicle9CurrMaintSelect').change(function() {setterVehicleMaintenance(4);});
+    $('#vehicle10CurrMaintSelect').change(function() {setterVehicleMaintenance(5);});
 	
 	$('#vehicle1').delegate('#vehicle1Miles','input propertychange', function() {calcVehicleEmissions('1');});
 	$('#vehicle1').delegate('#vehicle1GasMileage','input propertychange', function() {calcVehicleEmissions('1');});
@@ -2372,6 +2377,11 @@ jQuery(function ($) {
     $('#vehicle3RedMaintSelect').change(function() {setterVehicleMaintenance(3);});
     $('#vehicle4RedMaintSelect').change(function() {setterVehicleMaintenance(4);});
     $('#vehicle5RedMaintSelect').change(function() {setterVehicleMaintenance(5);});
+    $('#vehicle6RedMaintSelect').change(function() {setterVehicleMaintenance(1);});
+    $('#vehicle7RedMaintSelect').change(function() {setterVehicleMaintenance(2);});
+    $('#vehicle8RedMaintSelect').change(function() {setterVehicleMaintenance(3);});
+    $('#vehicle9RedMaintSelect').change(function() {setterVehicleMaintenance(4);});
+    $('#vehicle10RedMaintSelect').change(function() {setterVehicleMaintenance(5);});
 	
 	$('#revVehicle1').delegate('#reduceMilesInput1','input propertychange', function() {calcMilesSavings('1');});
 	$('#revVehicle1').delegate('#replaceVehicleInput1','input propertychange', function() {calcMpgSavings('1');});
