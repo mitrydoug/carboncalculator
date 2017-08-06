@@ -67,6 +67,30 @@ jQuery(function ($) {
     }
     extendDOM_addCurrentMaintenancePerVehicle();
 
+    function extendDOM_addReduceMaintenancePerVehicle() {
+         /* Add a new table row for asking whether the user is willing
+            to begin maintaining this vehicle in order to reduce carbon
+            emissions. */
+        for (var vehicleNum = 1; vehicleNum <= 5; vehicleNum++) {
+            redMaintQuestion = $(
+                '<tr>\
+                   <td></td>\
+                   <td><label> Perform regular maintenance? </label></td>\
+                   <td>\
+                       <select id="vehicle' + vehicleNum + 'RedMaintSelect">\
+                            <option>No</option>\
+                            <option>Yes</option>\
+                       </select>\
+                       <span class="info-asset info-maintenance"></span>\
+                    </td>\
+                    <td></td><td></td>\
+                 </tr>'
+            );
+            $('#revVehicle' + vehicleNum).append(redMaintQuestion);
+        }
+    }
+    extendDOM_addReduceMaintenancePerVehicle();
+
 
     //   development notes at the bottom of the page
 
