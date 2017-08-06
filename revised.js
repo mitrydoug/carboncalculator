@@ -176,8 +176,8 @@ jQuery(function ($) {
                    <td><label> Perform regular maintenance? </label></td>\
                    <td>\
                        <select id="vehicle' + vehicleNum + 'CurrMaintSelect">\
-                            <option>No</option>\
-                            <option>Yes</option>\
+                            <option>Do Not Do</option>\
+                            <option>Already Do</option>\
                        </select>\
                        <span class="info-asset info-maintenance"></span>\
                     </td>\
@@ -200,8 +200,8 @@ jQuery(function ($) {
                    <td><label> Perform regular maintenance? </label></td>\
                    <td>\
                        <select id="vehicle' + vehicleNum + 'RedMaintSelect">\
-                            <option>No</option>\
-                            <option>Yes</option>\
+                            <option>Will Not Do</option>\
+                            <option>Will Do</option>\
                        </select>\
                        <span class="info-asset info-maintenance"></span>\
                     </td>\
@@ -1407,17 +1407,16 @@ jQuery(function ($) {
 	}
 
     function setterVehicleMaintenance(id) {
-        console.log(id);
         vehicleNum = parseInt(id);
         currMaint = $('#vehicle' + vehicleNum + 'CurrMaintSelect').val();
         redMaint = $('#vehicle' + vehicleNum + 'RedMaintSelect').val();
         console.log('Vehicle ' + vehicleNum + ' has ' + currMaint + ' and ' + redMaint);
-        if (currMaint === 'Yes') {
+        if (currMaint === 'Already Do') {
             $('#vehicle' + vehicleNum + 'RedMaintRow').addClass('displayNone');
-        } else if (currMaint === 'No') {
+        } else if (currMaint === 'Do Not Do') {
             $('#vehicle' + vehicleNum + 'RedMaintRow').removeClass('displayNone');
         } else {
-            alert('currMaint is neither "Yes" nor "No"');
+            alert('currMaint is neither "Already Do" nor "Do Not Do"');
         }
     }
 
