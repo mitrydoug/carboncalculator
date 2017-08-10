@@ -146,8 +146,8 @@ jQuery(function ($) {
                    <td><label> Is this an electric vehicle? </label></td>\
                    <td>\
                        <select id="vehicle' + vehicleNum + 'ElecSelect">\
-                            <option>No</option>\
-                            <option>Yes</option>\
+                            <option> No </option>\
+                            <option> Yes &nbsp;</option>\
                        </select>\
                        <span class="info-iselectric info-asset"></span>\
                     </td>\
@@ -176,8 +176,8 @@ jQuery(function ($) {
                    <td><label> Perform regular maintenance? </label></td>\
                    <td>\
                        <select id="vehicle' + vehicleNum + 'CurrMaintSelect">\
-                            <option>Do Not Do</option>\
-                            <option>Already Do</option>\
+                            <option>Do Not Do &nbsp; </option>\
+                            <option>Already Do &nbsp; </option>\
                        </select>\
                        <span class="info-asset info-maintenance"></span>\
                     </td>\
@@ -200,8 +200,8 @@ jQuery(function ($) {
                    <td><label> Perform regular maintenance? </label></td>\
                    <td>\
                        <select id="vehicle' + vehicleNum + 'RedMaintSelect">\
-                            <option>Will Not Do</option>\
-                            <option>Will Do</option>\
+                            <option>Will Not Do &nbsp; </option>\
+                            <option>Will Do &nbsp; </option>\
                        </select>\
                        <span class="info-asset info-maintenance"></span>\
                     </td>\
@@ -1408,8 +1408,8 @@ jQuery(function ($) {
 
     function setterVehicleMaintenance(id) {
         vehicleNum = parseInt(id);
-        currMaint = $('#vehicle' + vehicleNum + 'CurrMaintSelect').val();
-        redMaint = $('#vehicle' + vehicleNum + 'RedMaintSelect').val();
+        currMaint = $.trim($('#vehicle' + vehicleNum + 'CurrMaintSelect').val());
+        redMaint = $.trim($('#vehicle' + vehicleNum + 'RedMaintSelect').val());
         console.log('Vehicle ' + vehicleNum + ' has ' + currMaint + ' and ' + redMaint);
         if (currMaint === 'Already Do') {
             $('#vehicle' + vehicleNum + 'RedMaintRow').addClass('displayNone');
