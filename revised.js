@@ -146,8 +146,8 @@ jQuery(function ($) {
                    <td><label> Is this an electric vehicle? </label></td>\
                    <td>\
                        <select id="vehicle' + vehicleNum + 'ElecSelect">\
-                            <option> No </option>\
-                            <option> Yes &nbsp;</option>\
+                            <option>No</option>\
+                            <option>Yes &nbsp;</option>\
                        </select>\
                        <span class="info-iselectric info-asset"></span>\
                     </td>\
@@ -176,8 +176,8 @@ jQuery(function ($) {
                    <td><label> Perform regular maintenance? </label></td>\
                    <td>\
                        <select id="vehicle' + vehicleNum + 'CurrMaintSelect">\
-                            <option>Do Not Do &nbsp; </option>\
-                            <option>Already Do &nbsp; </option>\
+                            <option>Do Not Do &nbsp;</option>\
+                            <option>Already Do &nbsp;</option>\
                        </select>\
                        <span class="info-asset info-maintenance"></span>\
                     </td>\
@@ -200,8 +200,8 @@ jQuery(function ($) {
                    <td><label> Perform regular maintenance? </label></td>\
                    <td>\
                        <select id="vehicle' + vehicleNum + 'RedMaintSelect">\
-                            <option>Will Not Do &nbsp; </option>\
-                            <option>Will Do &nbsp; </option>\
+                            <option>Will Not Do &nbsp;</option>\
+                            <option>Will Do &nbsp;</option>\
                        </select>\
                        <span class="info-asset info-maintenance"></span>\
                     </td>\
