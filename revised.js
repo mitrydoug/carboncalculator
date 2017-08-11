@@ -35,7 +35,6 @@ jQuery(function ($) {
     var emissionsSaved = 0;
     var usAvg = [0,0,0,0,0,0];    //  0-3 utilities, 4 transportation, 5 Waste
     var heatSource = "";
-	var maintCurrentSelect = "";
     var userRecycling  = [[0,"newspapers"],[0,"glass"],[0,"plastic"],[0,"aluminum and steel cans"],[0,"magazines"]];      // 1 = Already Done, 2 = Will Do, 0 = Won't Do
     var wasteProgress = [0,0,0,0,0];
     var homeProgress = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
@@ -1229,63 +1228,58 @@ jQuery(function ($) {
 		
 		return exhaust;
 	}
-	function calcVehicleEmissions(id){
+	function calcVehicleEmissions(id) {
 		$("#error-current-maintenance").removeClass("errorMsg").addClass("displayNone");
 		
 		var x = parseInt(id);
 		var mileChecker = $('#vehicle' + x + 'Miles').val();
 		var mpgChecker = $('#vehicle'+x+'GasMileage').val();
 
-		if ((maintCurrentSelect != "") || (mileChecker === "" && mpgChecker === "")) {
-			//alert("got in This far: "+mileChecker+" : " + mpgChecker);
-			if ((mileChecker != "" && mpgChecker != "")) {
-				//alert("got all the way in: "+mileChecker+" : " + mpgChecker);
-				var miles = scrubInputText(mileChecker);               //  check for non number related characters
-				document.getElementById('vehicle'+x+'Miles').value = miles;           //  if input contained non number related characters show revised number to user
-				miles = stripCommas(miles);
-				if ($('#vehicle'+x+'Select').val() == "Per Week") {                           // convert miles per week to miles per year first
-					miles = calcMilesPerYear(miles);
-				}
-	
-				var mpg = scrubInputText(mpgChecker);
-				document.getElementById('vehicle'+x+'GasMileage').value = mpg;
-				mpg = stripCommas(mpg);
-				
-				if (!isNaN(miles) && !isNaN(mpg)) {                     //  if the user enters 0 exhaust is NaN
-					var exhaust = calcVehicleExhaust(miles,mpg);
-					
-					if (maintCurrentSelect == "Do Not Do") {
-						exhaust = exhaust * 1.04;
-					}
-				}
-				else{
-					exhaust = 0;
-				}
-				
-				vehicleData[x-1][0] = miles;
-				vehicleData[x-1][1] = mpg;
-				vehicleData[x-1][2] = exhaust;
-				
-				if (isNaN(miles)) {      //  prevents showing NaN to user in Reduction
-					miles=0;
-				}
-				if (isNaN(mpg)) {      //  prevents showing NaN to user in Reduction
-					mpg=0;
-				}
-				
-				$('.vehicleInfo'+x).html(insertCommas(miles) + ' miles/year, avg. ' + mpg + ' MPG');      //  display in Reduction
-				$('.vehicle'+x+'Co2').html(insertCommas(Math.round(exhaust)));      //  display computed emission
-		
-				setterVehicleEmissions();
-			}
-		}
-		else{
-			//alert("this message 1");
-			$("#error-current-maintenance").removeClass("displayNone").addClass("errorMsg");
-			
-			document.getElementById("vehicle" + id + "Miles").value = "";
-			document.getElementById("vehicle" + id + "GasMileage").value = "";
-		}
+        if (mileChecker === '') mileChecker = '0';
+        if (mpgChecker  === '') mpgChecker  = '0';
+
+        //alert("got all the way in: "+mileChecker+" : " + mpgChecker);
+        var miles = scrubInputText(mileChecker);               //  check for non number related characters
+        if ($('#vehicle' + x + 'Miles').val() !== '') {
+            document.getElementById('vehicle'+x+'Miles').value = miles;
+        }
+        miles = stripCommas(miles);
+        if ($('#vehicle'+x+'Select').val() == "Per Week") {                           // convert miles per week to miles per year first
+            miles = calcMilesPerYear(miles);
+        }
+
+        var mpg = scrubInputText(mpgChecker);
+        if ($('#vehicle'+x+'GasMileage').val() !== '') {
+            document.getElementById('vehicle'+x+'GasMileage').value = mpg;
+        }
+        mpg = stripCommas(mpg);
+
+        if (!isNaN(miles) && !isNaN(mpg)) {                     //  if the user enters 0 exhaust is NaN
+            var exhaust = calcVehicleExhaust(miles,mpg);
+
+            if (vehicleData[x-1][3] != 1) {
+                exhaust = exhaust * 1.04;
+            }
+        }
+        else{
+            exhaust = 0;
+        }
+
+        vehicleData[x-1][0] = miles;
+        vehicleData[x-1][1] = mpg;
+        vehicleData[x-1][2] = exhaust;
+
+        if (isNaN(miles)) {      //  prevents showing NaN to user in Reduction
+            miles=0;
+        }
+        if (isNaN(mpg)) {      //  prevents showing NaN to user in Reduction
+            mpg=0;
+        }
+
+        $('.vehicleInfo'+x).html(insertCommas(miles) + ' miles/year, avg. ' + mpg + ' MPG');      //  display in Reduction
+        $('.vehicle'+x+'Co2').html(insertCommas(Math.round(exhaust)));      //  display computed emission
+
+        setterVehicleEmissions();
 		displayErrorMessages();
 	}
 	function setterVehicleEmissions(){
@@ -1311,114 +1305,69 @@ jQuery(function ($) {
 		displayVehicleProgressBar();
 	}
 	
-	function calculateMaintenance(){
-		var dollarsSaved=0;
-		var exhaustSaved=0;
+	function calculateMaintenance() {
+        var dollarsAlreadySaved=0;
+        var dollarsWillSave=0;
+        var exhaustAlreadySaved=0;
+        var exhaustWillSave=0;
 		var showErrorMsg = false;
 		
 		for (var x=0;x<numVehicles;x++){
-			if (!(isNaN(vehicleData[x][0])) && !(isNaN(vehicleData[x][1]))) {      //  miles = vehicleData[x][0], mpg = vehicleData[x][1]
-				dollarsSaved += calcVehicleCost(vehicleData[x][0], vehicleData[x][1]) * g_VEHICLE_EFFICIENCY_IMPROVEMENTS;
-                exhaustSaved += calcVehicleExhaust(vehicleData[x][0], vehicleData[x][1]) * g_VEHICLE_EFFICIENCY_IMPROVEMENTS;
+			if (!(isNaN(vehicleData[x][0])) && !(isNaN(vehicleData[x][1])) && vehicleData[x][1] != 0) {
+                if ((vehicleData[x][3] === 1 /* already do */)) {
+                    dollarsAlreadySaved += calcVehicleCost(vehicleData[x][0], vehicleData[x][1]) * g_VEHICLE_EFFICIENCY_IMPROVEMENTS;
+                    exhaustAlreadySaved += calcVehicleExhaust(vehicleData[x][0], vehicleData[x][1]) * g_VEHICLE_EFFICIENCY_IMPROVEMENTS;
+                    $('.maintReducDollarsSaved' + (x+1)).html("0");
+                    $('.maintReducCo2Saved' + (x+1)).html("0");
+                } else if (vehicleData[x][3] === 2 /* will do */) {
+                    var dol = calcVehicleCost(vehicleData[x][0], vehicleData[x][1]) * g_VEHICLE_EFFICIENCY_IMPROVEMENTS;
+                    var exh = calcVehicleExhaust(vehicleData[x][0], vehicleData[x][1]) * g_VEHICLE_EFFICIENCY_IMPROVEMENTS;
+                    console.log(dol + ' : ' + exh);
+                    $('.maintReducDollarsSaved' + (x+1)).html(insertCommas(Math.round(dol)));
+                    $('.maintReducCo2Saved' + (x+1)).html(insertCommas(Math.round(exh)));
+				    dollarsWillSave += dol;
+                    exhaustWillSave += exh;
+                } else if (vehicleData[x][3] === 3) {
+                    $('.maintReducDollarsSaved' + (x+1)).html("0");
+                    $('.maintReducCo2Saved' + (x+1)).html("0");
+                }
 			}
 		}
 		
-		userRevisedTotalEmissions[10][1] = exhaustSaved;
-        userRevisedTotalEmissions[10][2] = dollarsSaved;
-		
-		if ((userRevisedTotalEmissions[10][0]==1) || (userRevisedTotalEmissions[10][0]==2)) {
-			$('.maintenanceDollarsSaved').html(insertCommas(Math.round(userRevisedTotalEmissions[10][2])));           // also shows on Report
-			$('.maintenanceCo2Saved').html(insertCommas(Math.round(userRevisedTotalEmissions[10][1])));               // also shows on Report
-			
-			if (userRevisedTotalEmissions[10][0]==1) {
-				$('.maintReducDollarsSaved').html(0);
-				$('.maintReducCo2Saved').html(0);
-			}
-			else{
-				$('.maintReducDollarsSaved').html(insertCommas(Math.round(userRevisedTotalEmissions[10][2])));
-				$('.maintReducCo2Saved').html(insertCommas(Math.round(userRevisedTotalEmissions[10][1])));
-			}
-		}
-		else{
-			$('.maintReducDollarsSaved').html(0);
-			$('.maintReducCo2Saved').html(0);
-		}
+		userRevisedTotalEmissions[10][0] = exhaustAlreadySaved;
+        userRevisedTotalEmissions[10][1] = dollarsAlreadySaved;
+        userRevisedTotalEmissions[10][2] = exhaustWillSave;
+        userRevisedTotalEmissions[10][3] = dollarsWillSave;
+
+        $('.maintenanceDollarsSaved').html(insertCommas(Math.round(dollarsAlreadySaved)));           // also shows on Report
+        $('.maintenanceCo2Saved').html(insertCommas(Math.round(exhaustAlreadySaved)));               // also shows on Report
 		
 		setterRevisedEmissions();
 	}
-	function setterMaintenance(){
-		$("#error-maintenance").addClass("displayNone");
-		$("#error-redo-maintenance").addClass("displayNone");
-		$("#error-current-maintenance").removeClass("errorMsg").addClass("displayNone");
-
-		if (numVehicles == "0") {
-            $("#maintCurrent").addClass("displayNone");             //  hide the Maintenance question when there are zero cars.
-			$('#maintCurrentSelect').val("");                        //  Return the Select back to to its initial state.
-			$("#maintReduce").addClass("displayNone");               //  hide the Maintenance question when there are zero cars.
-			$('#maintReduceSelect').val("");                        //  Return the Select back to to its initial state.
-            $(".maintenanceDollarsSaved").html("0");
-            $(".maintenanceCo2Saved").html("0");
-		}
-        else if ($("#maintCurrent").hasClass('displayNone')) {
-            $("#maintReduce").removeClass("displayNone");                //  if numVehicles WAS 0 but not recalculating emissions
-            $("#maintCurrent").removeClass("displayNone");
-        }
-        else{
-            maintCurrentSelect= 'Do Not Do'; // $('#maintCurrentSelect').val();
-            var reduceSelect= 'Will Not Do'; // $('#maintReduceSelect').val();
-            
-            if (maintCurrentSelect != "") {                                                //  Must select Current Maintenance first
-                $("#maintReduce").removeClass("displayNone");                              //  Show bottom half
-				
-                if (maintCurrentSelect == 'Already Done') {
-                    $("#maintReduce").addClass("displayNone");                              //  Hide bottom half
-                    userRevisedTotalEmissions[10][0] = 1;                                   // 1 = Already Done
-                }
-				else if (maintCurrentSelect == 'Do Not Do') {
-					if (reduceSelect == "Will Do"){
-						userRevisedTotalEmissions[10][0] = 2;                                    // 2 = Will Do, 0 = Won't Do
-						calculateMaintenance();
-					}
-					else if (reduceSelect == "Will Not Do"){
-						userRevisedTotalEmissions[10][0] = 0;
-						$(".maintenanceDollarsSaved").html("0");
-						$(".maintenanceCo2Saved").html("0");
-					}
-					else{
-						
-						userRevisedTotalEmissions[10][0] = undefined;
-						//alert("is undefined now: "+userRevisedTotalEmissions[10][0]);
-					}
-				}
-				
-				if (userRevisedTotalEmissions[10][1]>0 || reduceSelect == "") {
-					for (var x=1;x<=numVehicles;x++){
-						calcVehicleEmissions(x);                               //  Revise the Estimated Emissions for each vehicle
-					}
-				}
-            }
-            else if (maintCurrentSelect == "" && reduceSelect != "") {                                                               // if the user trys to select the Reduce Maintenance w/out doing the first section
-				//alert("this message 2");
-				$("#error-current-maintenance").removeClass("displayNone").addClass("errorMsg");
-                document.getElementById("maintReduceSelect").value = "";
-            }
-        }
-		displayErrorMessages();
-		displayVehicleProgressBar();
-	}
 
     function setterVehicleMaintenance(id) {
-        vehicleNum = parseInt(id);
-        currMaint = $.trim($('#vehicle' + vehicleNum + 'CurrMaintSelect').val());
-        redMaint = $.trim($('#vehicle' + vehicleNum + 'RedMaintSelect').val());
+        var vehicleNum = parseInt(id);
+        var vehicleIdx = vehicleNum-1;
+        var currMaint = $.trim($('#vehicle' + vehicleNum + 'CurrMaintSelect').val());
+        var redMaint = $.trim($('#vehicle' + vehicleNum + 'RedMaintSelect').val());
         console.log('Vehicle ' + vehicleNum + ' has ' + currMaint + ' and ' + redMaint);
         if (currMaint === 'Already Do') {
             $('#vehicle' + vehicleNum + 'RedMaintRow').addClass('displayNone');
+            vehicleData[vehicleIdx][3] = 1; // already do
         } else if (currMaint === 'Do Not Do') {
             $('#vehicle' + vehicleNum + 'RedMaintRow').removeClass('displayNone');
+            if (redMaint === 'Will Do') {
+                vehicleData[vehicleIdx][3] = 2; // will do
+            } else if (redMaint === 'Will Not Do') {
+                vehicleData[vehicleIdx][3] = 3; // will not do
+            } else {
+                alert('redMaint is neither "Will Do" nor "Will Not Do"');
+            }
         } else {
             alert('currMaint is neither "Already Do" nor "Do Not Do"');
         }
+        console.log('vehicleData[' + vehicleIdx + '][3] = ' + vehicleData[vehicleIdx][3]);
+        calcVehicleEmissions(id);
     }
 
 	function calcVehicleCost(miles,mpg){
@@ -1871,7 +1820,26 @@ jQuery(function ($) {
 			$('#already-report'+x).css("background-color", "#fff");
 			$('#will-report'+x).css("background-color", "#fff");
 			
-			if (userRevisedTotalEmissions[x] != undefined) {                                    //  weed out undefined
+            if (x == 10 /* maintenance emmisions */) {
+                if (userRevisedTotalEmissions[10][0] > 0 || userRevisedTotalEmissions[10][1] > 0 /* already saved */) {
+                    counterAlready++;
+                    totalExhaustAlreadySaved += userRevisedTotalEmissions[10][0];
+                    totalDollarsAlreadySaved += userRevisedTotalEmissions[10][1];
+                    $('#already-report10').removeClass('displayNone');
+                    if (counterAlready % 2 == 1) {
+						$('#already-report10').css("background-color", "#f0f0f0");
+				    }
+                }
+                if (userRevisedTotalEmissions[10][2] > 0 || userRevisedTotalEmissions[10][3] > 0 /* will save */) {
+                    counterWill ++;
+                    totalExhaustWillSave += userRevisedTotalEmissions[10][2];
+                    totalDollarsWillSave += userRevisedTotalEmissions[10][3];
+                    $('#will-report10').removeClass('displayNone');
+                    if (counterAlready % 2 == 1) {
+						$('#will-report10').css("background-color", "#f0f0f0");
+				    }
+                }
+            } else if (userRevisedTotalEmissions[x] != undefined) {                                    //  weed out undefined
 				if (userRevisedTotalEmissions[x][0]==1) {                                       // first position can be (2) Will do, (0) Won't Do or (1) Already Do
 					counterAlready++;
 					$('#already-report'+x).removeClass('displayNone');
