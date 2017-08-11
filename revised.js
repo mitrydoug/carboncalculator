@@ -1171,6 +1171,7 @@ jQuery(function ($) {
 				calcMilesSavings(x);
 				calcMpgSavings(x);
 				calcVehicleEmissions(x);
+                setterVehicleMaintenance(x);
 			}
 		}
 		else if (originalVehicleNumber < revNumVehicles) {
@@ -1181,7 +1182,6 @@ jQuery(function ($) {
 				userRevisedTotalEmissions[ ((y+10) + (y)) ] = [0,0,0];
 			}
 		}
-		setterMaintenance();
 		displayVehicleProgressBar();
 	}
 	function displayVehicleProgressBar(){
