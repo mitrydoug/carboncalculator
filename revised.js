@@ -2345,11 +2345,11 @@ jQuery(function ($) {
     $('#vehicle3CurrMaintSelect').change(function() {setterVehicleMaintenance(3);});
     $('#vehicle4CurrMaintSelect').change(function() {setterVehicleMaintenance(4);});
     $('#vehicle5CurrMaintSelect').change(function() {setterVehicleMaintenance(5);});
-    $('#vehicle6CurrMaintSelect').change(function() {setterVehicleMaintenance(1);});
-    $('#vehicle7CurrMaintSelect').change(function() {setterVehicleMaintenance(2);});
-    $('#vehicle8CurrMaintSelect').change(function() {setterVehicleMaintenance(3);});
-    $('#vehicle9CurrMaintSelect').change(function() {setterVehicleMaintenance(4);});
-    $('#vehicle10CurrMaintSelect').change(function() {setterVehicleMaintenance(5);});
+    $('#vehicle6CurrMaintSelect').change(function() {setterVehicleMaintenance(6);});
+    $('#vehicle7CurrMaintSelect').change(function() {setterVehicleMaintenance(7);});
+    $('#vehicle8CurrMaintSelect').change(function() {setterVehicleMaintenance(8);});
+    $('#vehicle9CurrMaintSelect').change(function() {setterVehicleMaintenance(9);});
+    $('#vehicle10CurrMaintSelect').change(function() {setterVehicleMaintenance(10);});
 	
 	$('#vehicle1').delegate('#vehicle1Miles','input propertychange', function() {calcVehicleEmissions('1');});
 	$('#vehicle1').delegate('#vehicle1GasMileage','input propertychange', function() {calcVehicleEmissions('1');});
@@ -2376,11 +2376,11 @@ jQuery(function ($) {
     $('#vehicle3RedMaintSelect').change(function() {setterVehicleMaintenance(3);});
     $('#vehicle4RedMaintSelect').change(function() {setterVehicleMaintenance(4);});
     $('#vehicle5RedMaintSelect').change(function() {setterVehicleMaintenance(5);});
-    $('#vehicle6RedMaintSelect').change(function() {setterVehicleMaintenance(1);});
-    $('#vehicle7RedMaintSelect').change(function() {setterVehicleMaintenance(2);});
-    $('#vehicle8RedMaintSelect').change(function() {setterVehicleMaintenance(3);});
-    $('#vehicle9RedMaintSelect').change(function() {setterVehicleMaintenance(4);});
-    $('#vehicle10RedMaintSelect').change(function() {setterVehicleMaintenance(5);});
+    $('#vehicle6RedMaintSelect').change(function() {setterVehicleMaintenance(6);});
+    $('#vehicle7RedMaintSelect').change(function() {setterVehicleMaintenance(7);});
+    $('#vehicle8RedMaintSelect').change(function() {setterVehicleMaintenance(8);});
+    $('#vehicle9RedMaintSelect').change(function() {setterVehicleMaintenance(9);});
+    $('#vehicle10RedMaintSelect').change(function() {setterVehicleMaintenance(10);});
 	
 	$('#revVehicle1').delegate('#reduceMilesInput1','input propertychange', function() {calcMilesSavings('1');});
 	$('#revVehicle1').delegate('#replaceVehicleInput1','input propertychange', function() {calcMpgSavings('1');});
