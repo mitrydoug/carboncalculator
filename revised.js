@@ -1185,17 +1185,13 @@ jQuery(function ($) {
 		displayVehicleProgressBar();
 	}
 	function displayVehicleProgressBar(){
-		var segment = 100 / (numVehicles * 3 + 1);
+		var segment = 100 / (numVehicles * 3);
 		var theTotal = 0;
 
 		if (parseInt(numVehicles) === 0) {
 			theTotal=100;
 		}
 		else {
-			//alert("V Prog Bar: "+vehicleData[0][2]+" : "+revisedVehicleData[0][1]+" : "+revisedVehicleData[0][3]+" : "+userRevisedTotalEmissions[10][0]);
-			//alert("V Prog Bar: "+revisedVehicleData[idx][1]+" : "+revisedVehicleData[idx][3]+" : "+userRevisedTotalEmissions[10][0]);
-			//alert("V Prog Bar: "+vehicleData[idx][2]+" : "+userRevisedTotalEmissions[10][0]);
-			
 			for (var idx=0; idx<numVehicles; idx++){				
 				if (!isNaN(vehicleData[idx][2])) {
 					theTotal += segment;
@@ -1213,10 +1209,6 @@ jQuery(function ($) {
 					theTotal += segment;
 				}
 				//alert("segment3: "+theTotal);
-			}
-			if (!isNaN(userRevisedTotalEmissions[10][0])) {        // Maintenance: any response is accepted
-				//alert("this: "+userRevisedTotalEmissions[10][0]);
-				theTotal += segment;
 			}
 			//alert("segment4: "+theTotal);
 		}
