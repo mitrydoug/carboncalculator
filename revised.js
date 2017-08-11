@@ -1149,8 +1149,10 @@ jQuery(function ($) {
 				$('#vehicle'+x).addClass('displayNone');
 				$('#revVehicle'+x).addClass('displayNone');
 			
+                $('#vehicle' + x + 'ElecSelect').val('No');
 				document.getElementById("vehicle"+x+"Miles").value = "";                                    //  empties the inputs
 				document.getElementById("vehicle"+x+"GasMileage").value = "";
+                $('#vehicle' + x + 'CurrMaintSelect').val('Do Not Do &nbsp;');
 				
 				$(".vehicle"+x+"Co2").html("0");
 				$(".vehicleInfo"+x).html("");
@@ -1162,7 +1164,9 @@ jQuery(function ($) {
 				document.getElementById("replaceVehicleInput"+x).value = "";
 				$(".replaceVehicle"+x+"Dollars").html("0");
 				$(".replaceVehicle"+x+"Co2").html("0");
-				
+
+                $('vehicle' + x + 'RedMaintSelect').val('Will Not Do &nbsp;');
+
 				//calcSavings(x);
 				calcMilesSavings(x);
 				calcMpgSavings(x);
