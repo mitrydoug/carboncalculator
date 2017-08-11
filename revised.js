@@ -205,7 +205,12 @@ jQuery(function ($) {
                        </select>\
                        <span class="info-asset info-maintenance"></span>\
                     </td>\
-                    <td></td><td></td>\
+                    <td class="mobile-hook" >\
+                        <div class="bold">$<span class="maintReducDollarsSaved' + vehicleNum + '">0</span></div>\
+                    </td>\
+                    <td class="mobile-hook" >\
+                        <div class="bold"><span class="maintReducCo2Saved' + vehicleNum + '">0</span> lbs of CO<sub>2</sub></div>\
+                    </td>\
                  </tr>'
             );
             $('#revVehicle' + vehicleNum).append(redMaintQuestion);
